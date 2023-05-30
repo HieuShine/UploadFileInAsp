@@ -1,0 +1,51 @@
+﻿@model IEnumerable<uploadFile.Models.tailieudinhkem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DuongDan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.filePdf)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MoTa)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+       
+        <tr>
+            <td>
+                <img src="~/Upload/@item.DuongDan" height="100" width="100" alt="Alternate Text" />
+            </td>
+
+            <td>
+                <a href="@item.filePdf" download>@item.filePdf</a>
+            </td>
+
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.MoTa)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

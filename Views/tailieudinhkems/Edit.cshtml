@@ -1,0 +1,80 @@
+﻿@model uploadFile.Models.tailieudinhkem
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "tailieudinhkems", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>tailieudinhkem</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DuongDan, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.TextBox("DuongDanFile","", new { htmlAttributes = new { @class = "form-control" }, type = "file" })
+                    @Html.ValidationMessageFor(model => model.DuongDan, "", new { @class = "text-danger" })*@
+                <img id="output" height="100" width="100" src="~/Upload/@Model.DuongDan" alt="Alternate Text" />
+                <p><label for="ufile" style="cursor:pointer">Chọn file ảnh</label></p>
+                <input type="file" name="DuongDanFile" onchange="loadFile(event)" id="ufile" style="display:none" />
+                <p class="text-danger">@TempData["errImage"]</p>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.filePdf, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.TextBox("filePDF","", new { htmlAttributes = new { @class = "form-control" }, type = "file" })*@
+
+                <input type="text" readonly class="form-control" id="output_file" value="@Model.filePdf">
+                <p><label for="ufilee" style="cursor:pointer">Chọn tệp</label></p>
+                <input class="form-control" type="file" name="filePDF" id="ufilee" style="display:none;" onchange="loadFile1(event)" />
+                <p class="text-danger">@TempData["errFile"]</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MoTa, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    <script>
+        var loadFile = function (event) {
+            var url = document.getElementById('output');
+            url.src = URL.createObjectURL(event.target.files[0]);
+        }
+
+    </script>
+    <script>
+        var loadFile1 = function (event) {
+            var fileInput = event.target;
+            var link = document.getElementById('output_file');
+            link.value = fileInput.files[0].name;
+        };
+    </script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+}
